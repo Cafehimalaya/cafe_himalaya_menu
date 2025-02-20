@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe Himalaya</title>
+  <style>
+    /* Reset and Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      line-height: 1.6;
+      color: #333;
+      background-color: #fafafa;
+    }
+    
+    /* Header */
+    .header {
+      background-color: #1c1f26;
+      color: #f9d342;
+      padding: 1rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #f9d342;
+      text-decoration: none;
+      padding: 0.5rem;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+    
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #2b2f36;
+      min-width: 200px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+      z-index: 101;
+    }
+    .dropdown-content a {
+      color: #f9d342;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      display: block;
+      transition: background 0.3s ease;
+    }
+    .dropdown-content a:hover {
+      background-color: #3a3e46;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('https://www.himalayalandtreks.com/_next/image?url=https%3A%2F%2Fhlt-api.flamingoitstudio.net%2Fmedia%2Fpackage%2Fbanner%2Fkanchenjunga-base-camp-trek.jpg&w=3840&q=75')
+        center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      margin-top: 70px;
+      padding: 0 1rem;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    }
+    .hero-content p {
+      font-size: 1.25rem;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+    
+    /* Sections */
+    section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Menu Section */
+    .menu-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      color: #1c1f26;
+    }
+    .menu-section h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #1c1f26;
+      border-bottom: 2px solid #f9d342;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .menu-item {
+      border: 1px solid #ddd;
+      padding: 1.5rem;
+      border-radius: 8px;
+      background-color: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .menu-item h4 {
+      margin-bottom: 0.5rem;
+      color: #1c1f26;
+    }
+    .menu-item p {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    .price {
+      color: #c00;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+    
+    /* About Section */
+    .about-section {
+      background-color: #f4f4f4;
+      text-align: center;
+      color: #1c1f26;
+    }
+    .about-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .about-section p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    /* Contact Section */
+    .contact-section {
+      background-color: #1c1f26;
+      color: #f9d342;
+      text-align: center;
+    }
+    .contact-section .contact-info h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 400;
+    }
+    .contact-section .social-media i {
+      font-size: 2rem;
+      margin: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+    .contact-section .social-media i:hover {
+      color: #ffffff;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: #161a20;
+      color: #ccc;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  <header class="header">
+    <nav class="nav-container">
+      <h1>CAFE HIMALAYA</h1>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li class="dropdown">
+          <a href="#menu">Menu &#9662;</a>
+          <ul class="dropdown-content">
+            <li><a href="#soups">Soups</a></li>
+            <li><a href="#salads">Salads</a></li>
+            <li><a href="#veg-entrees">Vegetarian Entrees</a></li>
+            <li><a href="#nonveg-entrees">Non-Vegetarian Entrees</a></li>
+            <li><a href="#side-orders">Side Orders</a></li>
+            <li><a href="#desserts">Desserts</a></li>
+            <li><a href="#smoothies">Smoothies</a></li>
+            <li><a href="#beverages">Beverages</a></li>
+          </ul>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1 style="color: gold">Authentic Himalayan Cuisine</h1>
+      <p style="color: gold">Experience the taste of the Himalayas in every bite</p><br><br><br><br>
+      <p style="color: gold">Tuesday-Saturday: Noon-10pm</p>
+      <p style="color: gold">Sunday: Noon-9pm</p>
+      <p style="color: gold">Monday: Closed</p> 
+    </div>
+  </section>
+
+  <section class="menu-section" id="menu">
+    <h2>Our Menu</h2>
+    
+    <!-- Soups -->
+    <h3 id="soups">Soups</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>#1 Dal Soup</h4>
+        <p>Lentil soup flavored with shallot and cilantro.</p>
+        <p class="price">$6.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#2 Thang Soup</h4>
+        <p>Tofu, bean thread noodles, spinach, ginger and tomatoes in a clear broth.</p>
+        <p class="price">$6.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#3 Teyma Thang Soup</h4>
+        <p>A nourishing bean soup with mixed vegetables.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#4 Chasha Thang Soup</h4>
+        <p>Shredded chicken, peas, corn, ginger, tomato and spinach in a clear broth with glass noodle.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#5 Ruthang Momo Soup</h4>
+        <p>Stuffed beef or chicken mini dumplings in a clear broth with glass noodle.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#6 Ashom Thang Soup</h4>
+        <p>Pureed corn soup flavored with herbs and spices.</p>
+        <p class="price">$7.00</p>
+      </div>
+    </div>
+    
+    <!-- Salads -->
+    <h3 id="salads">Salads</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>#7 Tangtsel Salad</h4>
+        <p>Cabbage, carrots, peas and bean thread noodles marinated in sesame oil and vinegar.</p>
+        <p class="price">$7.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>#8 Shogok Khatsa Salad</h4>
+        <p>Spicy potato and peas cooked Himalayan style in sesame dressing.</p>
+        <p class="price">$7.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>#9 Avocado Salad</h4>
+        <p>Himalayan style seasoned potato with avocado and chickpeas in lemon dressing.</p>
+        <p class="price">$8.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>#10 Himalayan Khatsa Salad</h4>
+        <p>Spicy potato with cauliflower, green peas and tofu cooked in a spicy tomato sauce.</p>
+        <p class="price">$8.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>#11 Himalayan Nezom Salad</h4>
+        <p>A spicy medley of tofu, peas with seasoned potato and black-eyed peas.</p>
+        <p class="price">$6.25</p>
+      </div>
+      <div class="menu-item">
+        <h4>#11 Black Chana Salad</h4>
+        <p>Spicy protein-rich black chickpeas &amp; potatoes</p>
+        <p class="price">$8.50</p>
+      </div>
+    </div>
+    
+    <!-- Vegetarian Entrees -->
+    <h3 id="veg-entrees">Vegetarian Entrees</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>#12 Tsel Momo 8 Pieces</h4>
+        <p>Steamed or pan-fried dumplings stuffed with fresh seasonal vegetables served with cabbage salad. Vegetarian.</p>
+        <p class="price">$12.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#13 Shogok Momo Takpa 8 Pieces</h4>
+        <p>Pan-fried dumplings stuffed with potato and herbs served with cabbage salad. Vegetarian.</p>
+        <p class="price">$12.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#14 Aloo Khatsa</h4>
+        <p>Spicy Himalayan style seasoned potato dish served with paratha bread. Vegetarian.</p>
+        <p class="price">$12.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#15 Thukpa</h4>
+        <p>A traditional Tibetan noodle soup sautéed with fresh green vegetables. Vegetarian.</p>
+        <p class="price">$13.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#16 Tsel Gyathuk Ngopa</h4>
+        <p>Sautéed noodles mixed with fresh green vegetables and tofu. Vegetarian.</p>
+        <p class="price">$13.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#17 Tsel Gyathuk Takpa</h4>
+        <p>Pan-fried noodles topped with sautéed fresh green vegetables and tofu. Vegetarian.</p>
+        <p class="price">$14.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#18 Tsel Dey Ngopa</h4>
+        <p>Lightly fried rice with peas, carrot, beans, tofu. Vegetarian.</p>
+        <p class="price">$13.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#19 Chili Dofu</h4>
+        <p>Spicy tofu sautéed with onions, ginger, garlic, bell peppers, tomato, scallion and cilantro. Served with basmati rice. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#20 Tsel Phing</h4>
+        <p>Bean thread noodles sautéed with cabbage, carrot, peas and spinach served with paratha bread. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#21 Tsel Dofu</h4>
+        <p>Tofu sautéed with onion, ginger, garlic, cabbage, carrots, bell peppers and spinach served with basmati rice. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#22 Tsel Shesha</h4>
+        <p>Sautéed mushroom, broccoli, zucchini, carrots and spinach served with basmati rice. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#23 Tsel Ngotse</h4>
+        <p>Fresh vegetable of the day lightly sautéed Nepali style with a side of dal (lentil soup) served with basmati rice. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#24 Tsel Khowa</h4>
+        <p>Mixed vegetable curry with glass noodle and tofu cooked Tibetan style served with basmati rice. Vegetarian.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#25 Butternut Squash Chilly</h4>
+        <p>Spicy butternut sautéed with onions, ginger, garlic, bell peppers, tomato, scallion and cilantro, served with basmati rice.</p>
+        <p class="price">$15.00</p>
+      </div>
+    </div>
+    
+    <!-- Non-Vegetarian Entrees -->
+    <h3 id="nonveg-entrees">Non-Vegetarian Entrees</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>#26 Sha Momo 8 Pieces</h4>
+        <p>A traditional Tibetan dish, steamed or pan-fried dumplings stuffed with beef and herbs served with salad.</p>
+        <p class="price">$13.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#27 Chasha Momo 8 Pieces</h4>
+        <p>Steamed or pan-fried dumplings stuffed with chicken and herbs served with salad.</p>
+        <p class="price">$13.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#28 Sha Thukpa</h4>
+        <p>A traditional Tibetan noodle soup sautéed with fresh green vegetables, with your choice of beef, chicken or shrimp.</p>
+        <p class="price">$14.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#29 Gyathuk Ngopa</h4>
+        <p>Sautéed noodles with fresh green vegetables with your choice of beef, chicken or shrimp.</p>
+        <p class="price">$14.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#30 Gyathuk Takpa</h4>
+        <p>Pan-fried noodles topped with sautéed fresh vegetables with your choice of beef, chicken or shrimp.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#31 Shendey Ngopa</h4>
+        <p>Lightly fried rice with beef, chicken or shrimp.</p>
+        <p class="price">$14.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#32 Chasha Shamdey</h4>
+        <p>A Himalayan style chicken curry marinated in homemade yogurt and spices served with basmati rice.</p>
+        <p class="price">$15.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#33 Luksha Shamdey</h4>
+        <p>A Himalayan style lamb curry with potato served with basmati rice.</p>
+        <p class="price">$17.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#34 Phingsha</h4>
+        <p>Clear bean thread noodles sautéed with fresh vegetables and your choice of beef or chicken. With paratha (Indian bread).</p>
+        <p class="price">$16.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#35 Sha Ngotsel</h4>
+        <p>Fresh vegetable of the day lightly sautéed Nepali style with dal (lentil soup) and your choice of beef or chicken served with basmati rice.</p>
+        <p class="price">$16.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#36 Sha Khowa</h4>
+        <p>Mixed vegetable curry with glass noodle cooked Tibetan style with your choice of beef or chicken.</p>
+        <p class="price">$16.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#37 Sha Dofu</h4>
+        <p>Fresh tofu sautéed with cabbage, carrot, bell peppers and spinach, with your choice of beef or chicken served with basmati rice.</p>
+        <p class="price">$16.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#38 Sha Shesha</h4>
+        <p>Fresh mushroom, broccoli, zucchini and spinach sautéed with beef or chicken served with basmati rice.</p>
+        <p class="price">$16.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#39 Chili Chicken</h4>
+        <p>Spicy fried chicken cooked in onions, garlic, ginger, tomato and bell peppers served with basmati rice.</p>
+        <p class="price">$17.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#40 Chili Shrimp</h4>
+        <p>Spicy shrimp cooked in onions, tomatoes, bell peppers and ginger sauce served with basmati rice.</p>
+        <p class="price">$17.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>#41 Shapta</h4>
+        <p>A traditional Tibetan spicy beef dish sautéed with ginger, garlic, onion and bell peppers served with basmati rice or paratha.</p>
+        <p class="price">$17.00</p>
+      </div>
+    </div>
+    
+    <!-- Side Orders -->
+    <h3 id="side-orders">Side Orders</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>White Rice</h4>
+        <p>(Side option)</p>
+        <p class="price">$4.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Brown Rice</h4>
+        <p>(Side option)</p>
+        <p class="price">$4.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Paratha</h4>
+        <p>Whole wheat layered Indian bread.</p>
+        <p class="price">$4.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Hot Sauce</h4>
+        <p>6oz serving.</p>
+        <p class="price">$6.00</p>
+      </div>
+    </div>
+    
+    <!-- Desserts -->
+    <h3 id="desserts">Desserts</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>Ice Cream</h4>
+        <p>Coconut or Green tea.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Deysee</h4>
+        <p>Warm sweet rice pudding with butter, raisins and yogurt on the side.</p>
+        <p class="price">$7.00</p>
+      </div>
+    </div>
+    
+    <!-- Smoothies -->
+    <h3 id="smoothies">Smoothies</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>Tropical Sun Smoothie</h4>
+        <p>Fresh mangoes, lychee, yogurt and fresh squeezed orange juice.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Mango Island Smoothie</h4>
+        <p>Fresh mangoes, bananas, yogurt and fresh squeezed orange juice.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Mixed Berry Smoothie</h4>
+        <p>Fresh strawberries, raspberries, blueberries, yogurt and fresh orange juice.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Yoga Blend Smoothie</h4>
+        <p>Fresh strawberries, raspberries, bananas, yogurt and fresh orange juice.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Peach Lover Smoothie</h4>
+        <p>Fresh peaches, bananas, yogurt and fresh orange juice.</p>
+        <p class="price">$7.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Coconut Dream Smoothie</h4>
+        <p>Blended coconut ice cream.</p>
+        <p class="price">$7.00</p>
+      </div>
+    </div>
+    
+    <!-- Beverages -->
+    <h3 id="beverages">Beverages</h3>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <h4>Lassi</h4>
+        <p>Plain yogurt shake.</p>
+        <p class="price">$5.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>Mango Lassi</h4>
+        <p>Yogurt shake with fresh mangoes.</p>
+        <p class="price">$6.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Banana Lassi</h4>
+        <p>Yogurt shake with fresh banana.</p>
+        <p class="price">$6.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Chai Tea Blended Cold</h4>
+        <p>(No description provided)</p>
+        <p class="price">$4.99</p>
+      </div>
+      <div class="menu-item">
+        <h4>Soda</h4>
+        <p>(No description provided)</p>
+        <p class="price">$3.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>16 oz. Thai Ice Tea</h4>
+        <p>(No description provided)</p>
+        <p class="price">$5.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>16 oz. Thai Ice Coffee</h4>
+        <p>(No description provided)</p>
+        <p class="price">$5.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>Regular Ice Tea</h4>
+        <p>(No description provided)</p>
+        <p class="price">$4.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>Ice Lemonade</h4>
+        <p>(No description provided)</p>
+        <p class="price">$5.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Hot Coffee</h4>
+        <p>(No description provided)</p>
+        <p class="price">$3.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Hot Chai Tea Spice (SMALL)</h4>
+        <p>Contains dairy.</p>
+        <p class="price">$4.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Assorted Hot Tea</h4>
+        <p>(No description provided)</p>
+        <p class="price">$3.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Bocha Tibetan Tea with Salt, Butter and Milk</h4>
+        <p>(No description provided)</p>
+        <p class="price">$3.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Fresh Ginger Tea</h4>
+        <p>Hot | Pure brewed ginger tea.</p>
+        <p class="price">$4.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>Homemade Darjeeling Tea</h4>
+        <p>With milk and sugar.</p>
+        <p class="price">$4.00</p>
+      </div>
+      <div class="menu-item">
+        <h4>Ginger Tea (COLD)</h4>
+        <p>Cold ginger tea.</p>
+        <p class="price">$5.50</p>
+      </div>
+      <div class="menu-item">
+        <h4>Hot Chai Spice</h4>
+        <p>Contains dairy.</p>
+        <p class="price">$4.00</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section" id="about">
+    <h2>About Us</h2>
+    <p>
+      At Cafe Himalaya, we bring authentic Himalayan flavors to the city with a warm, inviting atmosphere.
+      Our menu features traditional recipes—from hearty soups to savory dumplings—crafted with fresh, locally sourced ingredients.
+      Join us for a genuine taste of the Himalayas.
+    </p>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <div class="contact-info">
+      <h1 style="background-color: #f9d342"><a href="https://www.seamless.com/menu/cafe-himalaya-78-e-1st-st-new-york/554013" target="_blank" rel="noopener noreferrer">Order Online!</a>
+      </h1>
+
+      <h1><i class="fas fa-map-marker-alt"></i> 78 E 1st St, New York, NY 10009</h1>
+      <h1><i class="fas fa-phone"></i> (212) 358-0160</h1>
+      <div class="social-media">
+        <i class="fab fa-instagram"></i>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Karma Doma &amp; Ang Phuri Lama. All rights reserved.</p>
+  </footer>
+</body>
+</html>
